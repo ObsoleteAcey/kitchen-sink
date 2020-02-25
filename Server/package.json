@@ -1,0 +1,53 @@
+{
+    "name": "kitchensink.api",
+    "version": "0.0.1",
+    "description": "API for the Kitchen Sink clients",
+    "main": "dist/serverBootstrap.js",
+    "scripts": {
+        "clean": "rimraf dist/* dist/.env",
+        "copy-assets": "ts-node tools/copyAssets",
+        "lint": "tslint -c tslint.json -p tsconfig.json --fix",
+        "tsc": "tsc",
+        "build": "npm-run-all clean lint tsc",
+        "dev:start": "npm-run-all build start",
+        "dev": "nodemon --watch src -e ts,ejs --exec npm run dev:start",
+        "start": "node .",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "upload-file": "node ./publish.js",
+        "install-deploy-packages": "npm --prefix ./dist install ./dist",
+        "deploy": "npm-run-all clean lint tsc copy-assets upload-file"
+    },
+    "dependencies": {
+        "body-parser": "1.19.0",
+        "cors": "2.8.5",
+        "dotenv": "8.2.0",
+        "express": "4.17.1",
+        "express-winston": "4.0.3",
+        "winston": "3.2.1",
+        "request": "2.88.2",
+        "moment": "2.24.0",
+        "moment-timezone": "0.5.27",
+        "inversify": "5.0.1",
+        "inversify-express-utils": "6.3.2",
+        "reflect-metadata": "0.1.13"
+    },
+    "devDependencies": {
+        "@types/dotenv": "8.2.0",
+        "@types/express": "4.17.2",
+        "@types/fs-extra": "8.1.0",
+        "@types/node": "13.7.4",
+        "@types/shelljs": "0.8.6",
+        "@types/cors": "2.8.6",
+        "@types/request": "2.48.4",
+        "@types/moment-timezone": "0.5.12",
+        "fs-extra": "8.1.0",
+        "nodemon": "2.0.2",
+        "npm-run-all": "4.1.5",
+        "rimraf": "3.0.0",
+        "shelljs": "0.8.3",
+        "ts-node": "8.6.2",
+        "tslint": "6.0.0",
+        "typescript": "3.7.5",
+        "archiver": "3.1.1"
+    }
+}
