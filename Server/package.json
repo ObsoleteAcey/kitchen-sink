@@ -29,7 +29,9 @@
         "moment-timezone": "0.5.27",
         "inversify": "5.0.1",
         "inversify-express-utils": "6.3.2",
-        "reflect-metadata": "0.1.13"
+        "reflect-metadata": "0.1.13",
+        "sequelize": "5.21.5",
+        "mysql2": "2.1.0"
     },
     "devDependencies": {
         "@types/dotenv": "8.2.0",
