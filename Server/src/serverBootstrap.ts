@@ -5,13 +5,16 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import expressWinston from 'express-winston';
 import { Container } from 'inversify';
-import { interfaces, InversifyExpressServer, TYPE } from 'inversify-express-utils';
+import { InversifyExpressServer } from 'inversify-express-utils';
+import errorHandlerFactory from 'strong-error-handler';
 import winston from "winston";
+import { sequelize } from './domain/sequalize.dev';
 // import config data
 import { TYPES } from "./config/types";
 // import controllers
-// import data services
-// import services
+import './controllers/pantryController';
+// import domain services
+// import application services
 
 
 // initialize configuration
@@ -45,6 +48,11 @@ const corsOptions: cors.CorsOptions = {
 const server = new InversifyExpressServer(container);
 
 server.setConfig((app: any) => {
+  app.use(errorHandlerFactory({
+    debug: process.env.NODE_ENV === 'development',
+    log: true,
+  }));
+
   // express-winston logger makes sense BEFORE the router
   app.use(expressWinston.logger({
     format: winston.format.combine(
@@ -66,8 +74,15 @@ server.setConfig((app: any) => {
 
 const appServer = server.build();
 
-// start the Express server
-appServer.listen(port, () => {
-  // tslint:disable-next-line:no-console
-  console.log(`server started at http://localhost:${port}`);
+(async() => {
+  await sequelize.sync({force: true});
+
+  // start the Express server
+  appServer.listen(port, () => {
+    // tslint:disable-next-line:no-console
+    console.log(`server started at http://localhost:${port}`);
+  });
 });
+
+
+

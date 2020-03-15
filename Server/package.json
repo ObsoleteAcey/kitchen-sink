@@ -37,7 +37,8 @@
         "sequelize-adapter": "1.0.15",
         "serverless-sequelize-migrations": "1.0.5",
         "sequelize-transparent-cache": "2.2.3",
-        "sequelize-transparent-cache-memcached": "2.2.3"
+        "sequelize-transparent-cache-memcached": "2.2.3",
+        "strong-error-handler": "3.4.0"
     },
     "devDependencies": {
         "@types/bluebird": "3.5.20",
@@ -58,6 +59,7 @@
         "ts-node": "8.6.2",
         "tslint": "6.0.0",
         "typescript": "3.7.5",
-        "archiver": "3.1.1"
+        "archiver": "3.1.1",
+        "sqlite3": "4.1.1"
     }
 }
