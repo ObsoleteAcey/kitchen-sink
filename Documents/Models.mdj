@@ -17,7 +17,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Server DB Model",
+					"name": "Pantry Model",
 					"defaultDiagram": true,
 					"ownedViews": [
 						{
@@ -5340,6 +5340,14 @@
 							"type": "long"
 						}
 					]
+				},
+				{
+					"_type": "UMLClassDiagram",
+					"_id": "AAAAAAFw3PwhWcK9Zwc=",
+					"_parent": {
+						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
+					},
+					"name": "UserAuth Model"
 				}
 			]
 		}

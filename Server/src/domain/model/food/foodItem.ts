@@ -1,14 +1,14 @@
-import {Model, Column, Table, BelongsToMany, Scopes, CreatedAt, UpdatedAt, AutoIncrement, HasOne} from "sequelize-typescript";
+import {Model, Column, Table, HasOne, HasMany} from 'sequelize-typescript';
 import { FoodItemType } from './foodItemType';
-import { Pantry } from "./pantry";
+import { PantryItem } from '../pantry/pantryItem';
 
 @Table
 export class FoodItem extends Model<FoodItem> {
     @Column({allowNull: false})
     name: string;
 
-    @HasOne(() => Pantry)
-    pantry: Pantry;
+    @HasMany(() => PantryItem)
+    pantryItems: PantryItem[];
 
     @HasOne(() => FoodItemType)
     type: FoodItemType;
