@@ -14,7 +14,12 @@ import { TYPES } from "./config/types";
 // import controllers
 import './controllers/pantryController';
 // import domain services
+import { PantryDomainService } from './domain/services/pantry.domain.service';
 // import application services
+import { PantryApplicationService } from './applicationServices/pantry.application.service'
+// import common services
+import { LoggingService } from './commonServices/logging.service';
+
 
 
 // initialize configuration
@@ -24,13 +29,11 @@ dotenv.config();
 const container = new Container();
 
 // register the DI
-// container.bind<LoggingService>(TYPES.LoggingService).to(LoggingService);
-// container.bind<StravaService>(TYPES.StravaService).to(StravaService);
-// container.bind<BikeWeekLeaderboardService>(TYPES.BikeWeekLeaderboardService).to(BikeWeekLeaderboardService);
-// container.bind<SummaryDataService>(TYPES.SummaryDataService).to(SummaryDataService);
-// container.bind<AthleteDataService>(TYPES.AthleteDataService).to(AthleteDataService);
-// container.bind<AthleteService>(TYPES.AthleteService).to(AthleteService);
-// container.bind<SummaryService>(TYPES.SummaryService).to(SummaryService);
+container.bind<LoggingService>(TYPES.LoggingService).to(LoggingService);
+
+container.bind<PantryApplicationService>(TYPES.LoggingService).to(PantryApplicationService);
+
+container.bind<PantryDomainService>(TYPES.LoggingService).to(PantryDomainService);
 
 // port is now available to the Node.js runtime
 // as if it were an environment variable
@@ -59,7 +62,7 @@ server.setConfig((app: any) => {
       winston.format.colorize(),
       winston.format.json()
     ),
-    level: "info",
+    level: "debug",
     transports: [
       new winston.transports.Console()
     ],
