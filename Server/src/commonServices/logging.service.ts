@@ -1,6 +1,10 @@
 import { createLogger, Logger, transports } from 'winston';
 
-export class LoggingService {
+export interface ILoggingService {
+
+}
+
+export class LoggingService implements ILoggingService {
     private _logger: Logger;
 
     constructor() {
