@@ -7,7 +7,7 @@ import { PantryApplicationService } from '../applicationServices/pantry.applicat
 export class PantryController implements interfaces.Controller {
 
     constructor(private _pantryService: PantryApplicationService) {
-        
+
     }
 
     @httpGet("/")

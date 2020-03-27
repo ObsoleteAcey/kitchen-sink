@@ -1,37 +1,69 @@
 import { ILoggingService } from '../../commonServices/logging.service';
 
-export interface codeToRunInErrorLogger {
-    (): void;
-}
+export type codeToRunInErrorLogger = () => void;
 
-export interface codeToRunInErrorLoggerWithResult<TResult> {
-    (): TResult;
-}
+export type codeToRunInErrorLoggerWithResult<TResult> = () => TResult;
 
-export class runIn {
-    public static errorLogger(loggingService: ILoggingService, codeToRunInErrorLogger: codeToRunInErrorLogger): void {
-        runInErrorLoggerAndReturnResult<boolean>(loggingService, codeToRunInErrorLogger, null);
+export type codeToRunInErrorLoggerAsync = () => Promise<void>;
+
+export type codeToRunInErrorLoggerWithResultAsync<TResult> = () => Promise<TResult>;
+
+export class RunIn {
+    public static errorLogger(loggingService: ILoggingService, theCodeToRunInErrorLogger: codeToRunInErrorLogger): void {
+        this.runInErrorLoggerAndReturnResult<any>(loggingService, theCodeToRunInErrorLogger, null);
     }
 
-    public static errorLoggerWithResult<TResult>(loggingService: ILoggingService, codeToRunInErrorLoggerWithResult: codeToRunInErrorLoggerWithResult<TResult>): TResult {
-        return this.runInErrorLoggerAndReturnResult<TResult>(loggingService, null, codeToRunInErrorLoggerWithResult);
+    public static errorLoggerAsync(loggingService: ILoggingService, theCodeToRunInErrorLoggerAsync: codeToRunInErrorLoggerAsync): Promise<any> {
+        return this.runInErrorLoggerAndReturnResult<any>(loggingService, theCodeToRunInErrorLoggerAsync, null);
     }
 
-    private static runInErrorLoggerAndReturnResult<TResult>(loggingService: ILoggingService, 
-            codeToRunInErrorLogger: codeToRunInErrorLogger,
-            codeToRunInErrorLoggerWithResult: codeToRunInErrorLoggerWithResult<TResult>): TResult {
-        
-        let result: TResult;
+    public static errorLoggerWithResult<TResult>(loggingService: ILoggingService, theCodeToRunInErrorLoggerWithResult: codeToRunInErrorLoggerWithResult<TResult>): TResult {
+        return this.runInErrorLoggerAndReturnResult<TResult>(loggingService, null, theCodeToRunInErrorLoggerWithResult);
+    }
+
+    public static errorLoggerWithResultAsync<TResult>(loggingService: ILoggingService,
+            theCodeToRunInErrorLoggerWithResultAsync: codeToRunInErrorLoggerWithResultAsync<TResult>): Promise<TResult> {
+        return this.runInErrorLoggerAndReturnResultAsync<TResult>(loggingService, null, theCodeToRunInErrorLoggerWithResultAsync);
+    }
+
+    private static runInErrorLoggerAndReturnResult<TResult>(loggingService: ILoggingService,
+            theCodeToRunInErrorLogger: codeToRunInErrorLogger,
+            theCodeToRunInErrorLoggerWithResult: codeToRunInErrorLoggerWithResult<TResult>): TResult {
+
+        let result: TResult = null;
 
         try {
-
+            if (theCodeToRunInErrorLogger) {
+                theCodeToRunInErrorLogger();
+            } else {
+                result = theCodeToRunInErrorLoggerWithResult();
+            }
         } catch(ex) {
-
-        } finally {
-
+            loggingService.error("An error occured", ex);
         }
 
         return result;
     }
 
+    private static runInErrorLoggerAndReturnResultAsync<TResult>(loggingService: ILoggingService,
+        theCodeToRunInErrorLoggerAsync: codeToRunInErrorLoggerAsync,
+        theCodeToRunInErrorLoggerWithResultAsync: codeToRunInErrorLoggerWithResultAsync<TResult>): Promise<TResult> {
+
+         return new Promise<TResult>((resolve, reject) => {
+            let result: Promise<any> = null;
+
+            try {
+                if (theCodeToRunInErrorLoggerAsync) {
+                    result = theCodeToRunInErrorLoggerAsync();
+                } else {
+                    result = theCodeToRunInErrorLoggerWithResultAsync();
+                }
+
+                resolve(result);
+            } catch(ex) {
+                loggingService.error("An error occured", ex);
+                reject("An error occured");
+            }
+        });
+    }
 }
