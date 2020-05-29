@@ -1,9 +1,12 @@
-import {Model, Table, HasMany} from 'sequelize-typescript';
-import { FoodItem } from '../food/foodItem';
+import {Model, Table, HasMany, Column, DataType} from 'sequelize-typescript';
+import { PantryItem } from './pantryItem';
 
 @Table
 export class Pantry extends Model<Pantry> {
-    @HasMany(() => FoodItem)
-    foodItems: FoodItem[];
+    @HasMany(() => PantryItem)
+    foodItems: PantryItem[];
+
+    @Column({ type: DataType.STRING, allowNull: false })
+    name: string;
 }
 
