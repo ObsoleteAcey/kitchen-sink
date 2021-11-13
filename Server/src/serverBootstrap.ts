@@ -1,6 +1,5 @@
 import "reflect-metadata";
 
-import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import expressWinston from 'express-winston';
@@ -19,6 +18,7 @@ import { PantryDomainService } from './domain/services/pantry.domain.service';
 import { PantryApplicationService } from './applicationServices/pantry.application.service'
 // import common services
 import { LoggingService } from './commonServices/logging.service';
+import express from 'express';
 
 
 
@@ -30,10 +30,8 @@ const container = new Container();
 
 // register the DI
 container.bind<LoggingService>(TYPES.LoggingService).to(LoggingService);
-
-container.bind<PantryApplicationService>(TYPES.LoggingService).to(PantryApplicationService);
-
-container.bind<PantryDomainService>(TYPES.LoggingService).to(PantryDomainService);
+container.bind<PantryApplicationService>(TYPES.PantryApplicationService).to(PantryApplicationService);
+container.bind<PantryDomainService>(TYPES.PantryDomainService).to(PantryDomainService);
 
 // port is now available to the Node.js runtime
 // as if it were an environment variable
@@ -50,7 +48,7 @@ const corsOptions: cors.CorsOptions = {
 // create server
 const server = new InversifyExpressServer(container);
 
-server.setConfig((app: any) => {
+server.setConfig((app: express.Application) => {
   app.use(errorHandlerFactory({
     debug: process.env.NODE_ENV === 'development',
     log: true,
@@ -69,20 +67,24 @@ server.setConfig((app: any) => {
   }));
   app.use(cors(corsOptions));
   // add body parser
-  app.use(bodyParser.urlencoded({
+  app.use(express.urlencoded({
     extended: true
   }));
-  app.use(bodyParser.json());
+  app.use(express.json());
 });
 
 const appServer = server.build();
 
-(async() => {
-  await sequelize.sync({force: true});
-
-  // start the Express server
-  appServer.listen(port, () => {
-    // tslint:disable-next-line:no-console
-    console.log(`server started at http://localhost:${port}`);
+((): void => {
+  sequelize.sync({force: true})
+  .then(() =>{
+    // start the Express server
+    appServer.listen(port, () => {
+      // tslint:disable-next-line:no-console
+      console.log(`server started at http://localhost:${port}`);
+    });
+  }).catch(() =>
+  {
+    // do othing
   });
 })();

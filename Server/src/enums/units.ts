@@ -1,32 +1,32 @@
 export enum Units {
-    Kilogram,
-    Gram,
-    Pound,
-    Ounce,
-    Litre,
-    Millilitre,
-    Gallon,
-    FluidOunce
+    kilogram,
+    gram,
+    pound,
+    ounce,
+    litre,
+    millilitre,
+    gallon,
+    fluidOunce
 }
 
-export const UnitsName = new Map<Units, string>([
-    [Units.Kilogram, 'kilogram'],
-    [Units.Gram, 'gram'],
-    [Units.Pound, 'pound'],
-    [Units.Ounce, 'ounce'],
-    [Units.Litre, 'litre'],
-    [Units.Millilitre, 'millilitre'],
-    [Units.Gallon, 'gallon'],
-    [Units.FluidOunce, 'fluid ounce']
+export const unitsName = new Map<Units, string>([
+    [Units.kilogram, 'kilogram'],
+    [Units.gram, 'gram'],
+    [Units.pound, 'pound'],
+    [Units.ounce, 'ounce'],
+    [Units.litre, 'litre'],
+    [Units.millilitre, 'millilitre'],
+    [Units.gallon, 'gallon'],
+    [Units.fluidOunce, 'fluid ounce']
 ]);
 
-export const UnitsShortName = new Map<Units, string>([
-    [Units.Kilogram, 'kg'],
-    [Units.Gram, 'g'],
-    [Units.Pound, 'lb'],
-    [Units.Ounce, 'oz'],
-    [Units.Litre, 'l'],
-    [Units.Litre, 'ml'],
-    [Units.Litre, 'gal'],
-    [Units.Litre, 'fl. oz.']
+export const unitsShortName = new Map<Units, string>([
+    [Units.kilogram, 'kg'],
+    [Units.gram, 'g'],
+    [Units.pound, 'lb'],
+    [Units.ounce, 'oz'],
+    [Units.litre, 'l'],
+    [Units.litre, 'ml'],
+    [Units.litre, 'gal'],
+    [Units.litre, 'fl. oz.']
 ]);

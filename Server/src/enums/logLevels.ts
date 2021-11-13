@@ -1,15 +1,15 @@
 export enum LogLevel {
-    Debug,
-    Verbose,
-    Info,
-    Warn,
-    Error
+    debug,
+    verbose,
+    info,
+    warn,
+    error
 }
 
-export const LogLevelName = new Map<LogLevel, string>([
-    [LogLevel.Debug, 'debug'],
-    [LogLevel.Verbose, 'verbose'],
-    [LogLevel.Info, 'info'],
-    [LogLevel.Warn, 'warn'],
-    [LogLevel.Error, 'error']
+export const logLevelName = new Map<LogLevel, string>([
+    [LogLevel.debug, 'debug'],
+    [LogLevel.verbose, 'verbose'],
+    [LogLevel.info, 'info'],
+    [LogLevel.warn, 'warn'],
+    [LogLevel.error, 'error']
 ]);

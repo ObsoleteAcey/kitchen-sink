@@ -1,16 +1,16 @@
 import {Model, Table, HasOne, Column, DataType} from "sequelize-typescript";
 import { FoodItem } from '../food/foodItem';
-import { ToNumber } from '../../../annotations/toNumber';
+import { toNumber } from '../../../annotations/toNumber';
 import { Units } from '../../../enums/units';
 import { ShoppingList } from './shoppingList';
 
 @Table
 export class ShoppingListItem extends Model<ShoppingListItem> {
-    @ToNumber
+    @toNumber
     @Column({ type: DataType.DECIMAL(10, 2), allowNull: false })
     quantity: number;
 
-    @ToNumber
+    @toNumber
     @Column({ type: DataType.DECIMAL(10, 2) })
     cost: number;
 

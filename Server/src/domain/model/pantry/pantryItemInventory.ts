@@ -1,15 +1,16 @@
 import {Model, Table, HasOne, Column, DataType} from 'sequelize-typescript';
 import { FoodItem } from '../food/foodItem';
-import { ToNumber } from '../../../annotations/toNumber';
+import { toNumber } from '../../../annotations/toNumber';
 import { Units } from '../../../enums/units';
+import { PantryItemInventoryDto } from '../../../dataobjects/entities/pantry/pantryItemInventoryDto';
 
 @Table
 export class PantryItemInventory extends Model<PantryItemInventory> {
-    @ToNumber
+    @toNumber
     @Column({ type: DataType.DECIMAL(10, 2), allowNull: false })
     quantity: number;
 
-    @ToNumber
+    @toNumber
     @Column({ type: DataType.DECIMAL(10, 2) })
     cost: number;
 
@@ -18,5 +19,11 @@ export class PantryItemInventory extends Model<PantryItemInventory> {
 
     @HasOne(() => FoodItem)
     foodItem: FoodItem;
-}
 
+    public toDto(): PantryItemInventoryDto {
+        return {
+            quantity: this.quantity,
+            cost: this.cost
+        };
+    }
+}

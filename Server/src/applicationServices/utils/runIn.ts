@@ -10,11 +10,11 @@ export type CodeToRunInErrorLoggerWithResultAsync<TResult> = () => Promise<TResu
 
 export class RunIn {
     public static errorLogger(loggingService: ILoggingService, codeToRunInErrorLogger: CodeToRunInErrorLogger): void {
-        this.runInErrorLoggerAndReturnResult<any>(loggingService, codeToRunInErrorLogger, null);
+        this.runInErrorLoggerAndReturnResult<void>(loggingService, codeToRunInErrorLogger, null);
     }
 
-    public static errorLoggerAsync(loggingService: ILoggingService, codeToRunInErrorLoggerAsync: CodeToRunInErrorLoggerAsync): Promise<any> {
-        return this.runInErrorLoggerAndReturnResult<any>(loggingService, codeToRunInErrorLoggerAsync, null);
+    public static errorLoggerAsync(loggingService: ILoggingService, codeToRunInErrorLoggerAsync: CodeToRunInErrorLoggerAsync): Promise<null> {
+        return this.runInErrorLoggerAndReturnResultAsync<null>(loggingService, codeToRunInErrorLoggerAsync, null);
     }
 
     public static errorLoggerWithResult<TResult>(loggingService: ILoggingService, codeToRunInErrorLoggerWithResult: CodeToRunInErrorLoggerWithResult<TResult>): TResult {

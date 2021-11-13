@@ -1,3 +1,4 @@
+import { injectable } from 'inversify';
 import { createLogger, Logger, transports } from 'winston';
 
 export interface ILoggingService {
@@ -6,6 +7,7 @@ export interface ILoggingService {
     trace: (message: string) => void;
 }
 
+@injectable()
 export class LoggingService implements ILoggingService {
     private _logger: Logger;
 
