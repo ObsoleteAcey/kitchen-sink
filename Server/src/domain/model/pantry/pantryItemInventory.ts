@@ -1,11 +1,11 @@
-import {Model, Table, HasOne, Column, DataType} from 'sequelize-typescript';
+import {Model, Table, BelongsTo, Column, DataType, ForeignKey} from 'sequelize-typescript';
 import { FoodItem } from '../food/foodItem';
 import { toNumber } from '../../../annotations/toNumber';
 import { Units } from '../../../enums/units';
 import { PantryItemInventoryDto } from '../../../dataobjects/entities/pantry/pantryItemInventoryDto';
 
 @Table
-export class PantryItemInventory extends Model<PantryItemInventory> {
+export class PantryItemInventory extends Model {
     @toNumber
     @Column({ type: DataType.DECIMAL(10, 2), allowNull: false })
     quantity: number;
@@ -17,7 +17,11 @@ export class PantryItemInventory extends Model<PantryItemInventory> {
     @Column({ type: DataType.INTEGER, allowNull: false })
     unit: Units;
 
-    @HasOne(() => FoodItem)
+    @ForeignKey(() => FoodItem)
+    @Column
+    foodItemId: number;
+
+    @BelongsTo(() => FoodItem)
     foodItem: FoodItem;
 
     public toDto(): PantryItemInventoryDto {

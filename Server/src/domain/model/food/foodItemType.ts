@@ -2,7 +2,7 @@ import {Model, Column, Table, HasMany} from 'sequelize-typescript';
 import { FoodItem } from './foodItem';
 
 @Table
-export class FoodItemType extends Model<FoodItemType> {
+export class FoodItemType extends Model {
     @Column({allowNull: false})
     name: string;
 

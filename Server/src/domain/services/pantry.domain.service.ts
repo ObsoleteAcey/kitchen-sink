@@ -18,6 +18,6 @@ export class PantryDomainService {
             return Pantry.findByPk(id);
         });
 
-        return result.toDto();
+        return result?.toDto();
     }
 }

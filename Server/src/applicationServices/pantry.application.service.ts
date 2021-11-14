@@ -1,6 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { LoggingService } from '../commonServices/logging.service';
 import { TYPES } from '../config/types';
+import { PantryDto } from '../dataobjects/entities/pantry/pantryDto';
 import { PantryDomainService } from '../domain/services/pantry.domain.service';
 
 @injectable()
@@ -13,5 +14,8 @@ export class PantryApplicationService {
         // do nothing
     }
 
-
+    public getPantryByIdAsync(id: number): Promise<PantryDto>
+    {
+        return this._pantryDomainService.getPantryById(id);
+    }
 }

@@ -1,16 +1,24 @@
-import {Model, Table, HasOne, HasMany} from 'sequelize-typescript';
+import {Model, Table, HasMany, ForeignKey, Column, BelongsTo} from 'sequelize-typescript';
 import { FoodItem } from '../food/foodItem';
 import { Pantry } from "./pantry";
 import { PantryItemInventory } from './pantryItemInventory';
 
 @Table
-export class PantryItem extends Model<PantryItem> {
-    @HasOne(() => Pantry)
+export class PantryItem extends Model {
+    @ForeignKey(() => Pantry)
+    @Column
+    pantryId: number;
+
+    @BelongsTo(() => Pantry)
     pantry: Pantry;
 
-    @HasMany(() => PantryItemInventory)
+    @HasMany(() => PantryItemInventory, 'foodItemId')
     inventory: PantryItemInventory[];
 
-    @HasOne(() => FoodItem)
+    @ForeignKey(() => FoodItem)
+    @Column
+    foodItemId: number;
+
+    @BelongsTo(() => FoodItem)
     foodItem: FoodItem;
 }
