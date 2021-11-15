@@ -1,8 +1,8 @@
 import {Model, Table, BelongsTo, Column, DataType, ForeignKey} from "sequelize-typescript";
-import { FoodItem } from '../food/foodItem';
+import { FoodItem } from '../food/foodItem.model';
 import { toNumber } from '../../../annotations/toNumber';
 import { Units } from '../../../enums/units';
-import { ShoppingList } from './shoppingList';
+import { ShoppingList } from './shoppingList.model';
 
 @Table
 export class ShoppingListItem extends Model {

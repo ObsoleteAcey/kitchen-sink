@@ -1,8 +1,8 @@
 import {Model, Table, BelongsTo, Column, DataType, ForeignKey} from 'sequelize-typescript';
-import { FoodItem } from '../food/foodItem';
+import { FoodItem } from '../food/foodItem.model';
 import { toNumber } from '../../../annotations/toNumber';
 import { Units } from '../../../enums/units';
-import { PantryItemInventoryDto } from '../../../dataobjects/entities/pantry/pantryItemInventoryDto';
+import { PantryItemInventoryDto } from '../../../dataobjects/dtos/pantry/pantryItemInventory.dto';
 
 @Table
 export class PantryItemInventory extends Model {
@@ -26,6 +26,7 @@ export class PantryItemInventory extends Model {
 
     public toDto(): PantryItemInventoryDto {
         return {
+            id: this.id as number,
             quantity: this.quantity,
             cost: this.cost
         };

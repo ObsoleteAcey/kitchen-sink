@@ -8,30 +8,17 @@ import { InversifyExpressServer } from 'inversify-express-utils';
 import errorHandlerFactory from 'strong-error-handler';
 import winston from "winston";
 import { sequelize } from './domain/sequalize.dev';
-// import config data
-import { TYPES } from "./config/types";
 // import controllers
 import './controllers/pantryController';
-// import domain services
-import { PantryDomainService } from './domain/services/pantry.domain.service';
-// import application services
-import { PantryApplicationService } from './applicationServices/pantry.application.service'
-// import common services
-import { LoggingService } from './commonServices/logging.service';
+
 import express from 'express';
+import { DependencyInjectionConfigurator } from './config/di.config';
 
 
 
 // initialize configuration
 dotenv.config();
 
-// set up container
-const container = new Container();
-
-// register the DI
-container.bind<LoggingService>(TYPES.LoggingService).to(LoggingService);
-container.bind<PantryApplicationService>(TYPES.PantryApplicationService).to(PantryApplicationService);
-container.bind<PantryDomainService>(TYPES.PantryDomainService).to(PantryDomainService);
 
 // port is now available to the Node.js runtime
 // as if it were an environment variable
@@ -46,7 +33,7 @@ const corsOptions: cors.CorsOptions = {
 };
 
 // create server
-const server = new InversifyExpressServer(container);
+const server = new InversifyExpressServer(DependencyInjectionConfigurator.container);
 
 server.setConfig((app: express.Application) => {
   app.use(errorHandlerFactory({

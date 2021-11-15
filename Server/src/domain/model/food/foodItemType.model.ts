@@ -1,5 +1,5 @@
 import {Model, Column, Table, HasMany} from 'sequelize-typescript';
-import { FoodItem } from './foodItem';
+import { FoodItem } from './foodItem.model';
 
 @Table
 export class FoodItemType extends Model {

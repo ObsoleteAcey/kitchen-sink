@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { LoggingService } from '../commonServices/logging.service';
-import { TYPES } from '../config/types';
-import { PantryDto } from '../dataobjects/entities/pantry/pantryDto';
+import { TYPES } from '../config/types.config';
+import { PantryDto } from '../dataobjects/dtos/pantry/pantry.dto';
 import { PantryDomainService } from '../domain/services/pantry.domain.service';
 
 @injectable()

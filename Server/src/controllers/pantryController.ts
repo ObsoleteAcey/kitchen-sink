@@ -3,8 +3,8 @@ import { interfaces, controller, httpGet, httpPost, httpDelete, request, queryPa
 import { inject } from "inversify";
 import { PantryApplicationService } from '../applicationServices/pantry.application.service';
 // import config data
-import { TYPES } from "../config/types";
-import { PantryDto } from '../dataobjects/entities/pantry/pantryDto';
+import { TYPES } from "../config/types.config";
+import { PantryDto } from '../dataobjects/dtos/pantry/pantry.dto';
 
 
 @controller("/pantry")

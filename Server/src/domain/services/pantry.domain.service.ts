@@ -1,9 +1,9 @@
 import { LoggingService } from '../../commonServices/logging.service';
 import { RunInSequalize } from '../utils/runInSequalize';
-import { PantryDto } from '../../dataobjects/entities/pantry/pantryDto';
-import { Pantry } from '../model/pantry/pantry';
+import { PantryDto } from '../../dataobjects/dtos/pantry/pantry.dto';
+import { Pantry } from '../model/pantry/pantry.model';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../config/types';
+import { TYPES } from '../../config/types.config';
 
 @injectable()
 export class PantryDomainService {

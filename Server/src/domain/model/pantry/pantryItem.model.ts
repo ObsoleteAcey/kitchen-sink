@@ -1,7 +1,7 @@
 import {Model, Table, HasMany, ForeignKey, Column, BelongsTo} from 'sequelize-typescript';
-import { FoodItem } from '../food/foodItem';
-import { Pantry } from "./pantry";
-import { PantryItemInventory } from './pantryItemInventory';
+import { FoodItem } from '../food/foodItem.model';
+import { Pantry } from "./pantry.model";
+import { PantryItemInventory } from './pantryItemInventory.model';
 
 @Table
 export class PantryItem extends Model {
