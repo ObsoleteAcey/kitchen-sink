@@ -7,11 +7,12 @@ import { PantryDomainService } from '../domain/services/pantry.domain.service';
 import { PantryApplicationService } from '../applicationServices/pantry.application.service'
 // import common services
 import { LoggingService } from '../commonServices/logging.service';
+import { MappingService } from '../commonServices/mapping.service';
 
 export class DependencyInjectionConfigurator {
     private static _container: Container;
 
-    public static configure(): Container {
+    private static configure(): Container {
       // protect against multiple calls
       if (this._container) {
         return this._container;
@@ -21,6 +22,7 @@ export class DependencyInjectionConfigurator {
 
       // register the DI
       this._container.bind<LoggingService>(TYPES.LoggingService).to(LoggingService);
+      this._container.bind<MappingService>(TYPES.MappingService).to(MappingService);
       this._container.bind<PantryApplicationService>(TYPES.PantryApplicationService).to(PantryApplicationService);
       this._container.bind<PantryDomainService>(TYPES.PantryDomainService).to(PantryDomainService);
 

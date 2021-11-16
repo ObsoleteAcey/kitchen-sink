@@ -1,3 +1,6 @@
-export interface PantryViewModel extends BaseViewModel {
-    
+import { PantryItemViewModel } from './pantryItem.viewmodel';
+
+export interface PantryViewModel {
+    name: string;
+    pantryItems: PantryItemViewModel[];
 }
