@@ -4,10 +4,13 @@ import { PantryDto } from '../../dataobjects/dtos/pantry/pantry.dto';
 import { Pantry } from '../model/pantry/pantry.model';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../config/types.config';
+import { MappingService } from '../../commonServices/mapping.service';
 
 @injectable()
 export class PantryDomainService {
     constructor(
+        @inject(TYPES.MappingService)
+        private _mappingService: MappingService,
         @inject(TYPES.LoggingService)
         private _loggingService: LoggingService) {
         // do nothing
@@ -18,6 +21,11 @@ export class PantryDomainService {
             return Pantry.findByPk(id);
         });
 
-        return result?.toDto();
+        let pantryDto: PantryDto = null;
+        if(result) {
+            pantryDto = this._mappingService.map<Pantry, PantryDto>(result, 'UserDto', 'User');
+        }
+
+        return pantryDto;
     }
 }

@@ -1,6 +1,8 @@
 import { Dictionary, MapOptions, Mapper } from '@automapper/core';
+import { injectable } from 'inversify';
 import { MappingConfigurator } from '../config/mapping.config';
 
+@injectable()
 export  class MappingService {
     private _mapper: Mapper;
 

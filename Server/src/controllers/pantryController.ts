@@ -34,7 +34,8 @@ export class PantryController implements interfaces.Controller {
 
         if(pantry === null)
         {
-            res.status(404).send("Pantry no found");
+            res.status(404).send("Pantry not found");
+            return;
         }
 
         res.status(200).send(pantry);
