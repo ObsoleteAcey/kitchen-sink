@@ -14,7 +14,7 @@ export  class MappingService {
         return this._mapper.map<TSource, TDestination, TExtraArguments>(sourceObj, destination, source, options);
     } */
 
-    public map<TSource extends Dictionary<TSource>, TDestination extends Dictionary<TDestination>, TExtraArguments extends Record<string, any> = Record<string, any>>(sourceObj: TSource, destination: string, source: string, options?: MapOptions<TSource, TDestination, TExtraArguments>): TDestination {
+    public map<TSource extends Dictionary<TSource>, TDestination extends Dictionary<TDestination>, TExtraArguments extends Record<string, any> = Record<string, any>>(sourceObj: TSource, destination: new (...args: unknown[]) => TDestination, source: new (...args: unknown[]) => TSource, options?: MapOptions<TSource, TDestination, TExtraArguments>): TDestination {
         return this._mapper.map<TSource, TDestination, TExtraArguments>(sourceObj, destination, source, options);
     }
 

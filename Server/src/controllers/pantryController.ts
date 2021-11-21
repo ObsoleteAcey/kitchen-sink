@@ -1,16 +1,20 @@
 import * as express from "express";
-import { interfaces, controller, httpGet, httpPost, httpDelete, request, queryParam, response, requestParam, next } from "inversify-express-utils";
+import { interfaces, controller, httpGet, httpPost, httpDelete, request, queryParam, response, requestParam, next, requestBody, TYPE } from "inversify-express-utils";
 import { inject } from "inversify";
 import { PantryApplicationService } from '../applicationServices/pantry.application.service';
 // import config data
 import { TYPES } from "../config/types.config";
 import { PantryDto } from '../dataobjects/dtos/pantry/pantry.dto';
+import { PantryViewModel } from '../dataobjects/viewmodels/pantry/pantry.vm';
+import { MappingService } from '../commonServices/mapping.service';
 
 
 @controller("/pantry")
 export class PantryController implements interfaces.Controller {
 
     constructor(
+        @inject(TYPES.MappingService)
+        private _mappingService: MappingService,
         @inject(TYPES.PantryApplicationService)
         private _pantryService: PantryApplicationService) {
         // do nothing
@@ -39,5 +43,15 @@ export class PantryController implements interfaces.Controller {
         }
 
         res.status(200).send(pantry);
+    }
+
+    @httpPost("/new")
+    private async createPantry(@requestBody() pantryVm: PantryViewModel, @response() res: express.Response): Promise<void>
+    {
+        // do validation here
+
+        await this._pantryService.createPantry(this._mappingService.map(pantryVm, PantryDto, PantryViewModel));
+
+        res.status(200).send();
     }
 }

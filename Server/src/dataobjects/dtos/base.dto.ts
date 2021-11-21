@@ -1,4 +1,4 @@
-export interface BaseDto
+export abstract class BaseDto
 {
     id?: number;
 }

@@ -1,6 +1,6 @@
 import { BaseDto } from '../base.dto';
 import { PantryItemInventoryDto } from './pantryItemInventory.dto';
 
-export interface PantryItemDto extends BaseDto {
+export class  PantryItemDto extends BaseDto {
     inventory: PantryItemInventoryDto[];
 }

@@ -1,11 +1,13 @@
 import { createMapper, Mapper } from '@automapper/core';
-import { pojos, createMetadataMap } from '@automapper/pojos';
+import { sequelize } from '@automapper/sequelize';
 import { PantryDto } from '../dataobjects/dtos/pantry/pantry.dto';
 import { PantryItemDto } from '../dataobjects/dtos/pantry/pantryItem.dto';
 import { PantryItemInventoryDto } from '../dataobjects/dtos/pantry/pantryItemInventory.dto';
-import { PantryViewModel } from '../dataobjects/viewmodels/pantry/pantry.viewmodel';
-import { PantryItemViewModel } from '../dataobjects/viewmodels/pantry/pantryItem.viewmodel';
-import { PantryItemInventoryViewModel } from '../dataobjects/viewmodels/pantry/pantryItemInventory.viewModel';
+import { PantryViewModel } from '../dataobjects/viewmodels/pantry/pantry.vm';
+import { PantryItemViewModel } from '../dataobjects/viewmodels/pantry/pantryItem.vm';
+import { PantryItemInventoryViewModel } from '../dataobjects/viewmodels/pantry/pantryItemInventory.vm';
+import { Pantry } from '../domain/model/pantry/pantry.model';
+import { PantryItem } from '../domain/model/pantry/pantryItem.model';
 
 
 export class MappingConfigurator {
@@ -14,41 +16,25 @@ export class MappingConfigurator {
   private static configure(): Mapper
   {
     this._mapper = createMapper({
-      name: 'someName',
-      pluginInitializer: pojos
+      name: 'sequalizeMapper',
+      pluginInitializer: sequelize()
     });
 
-    createMetadataMap<PantryItemInventoryDto>('PantryItemInventoryDto', {
-      cost: Number,
-      quantity: Number
-    });
+    // map ViewModel to DTO
+    this._mapper.createMap(PantryViewModel,PantryDto);
+    this._mapper.createMap(PantryItemViewModel,PantryItemDto);
+    this._mapper.createMap(PantryItemInventoryViewModel,PantryItemInventoryDto);
+    // map DTO to ViewModel
+    this._mapper.createMap(PantryDto, PantryViewModel);
+    this._mapper.createMap(PantryItemDto, PantryItemViewModel);
+    this._mapper.createMap(PantryItemInventoryDto, PantryItemInventoryViewModel);
 
-    createMetadataMap<PantryItemDto>('PantryItemDto', {
-      inventory: 'PantryItemInventoryDto'
-    });
+    // map DTO to DomainModel
+    this._mapper.createMap(PantryDto, Pantry);
 
-    createMetadataMap<PantryDto>('PantryDto', {
-      name: String,
-      pantryItems: 'PantryItemDto'
-    });
-
-    createMetadataMap<PantryItemInventoryViewModel>('PantryItemInventoryViewModel', {
-      cost: Number,
-      quantity: Number
-    });
-
-    createMetadataMap<PantryItemViewModel>('PantryItemViewModel', {
-      inventory: 'PantryItemInventoryViewModel'
-    });
-
-    createMetadataMap<PantryViewModel>('PantryViewModel', {
-      name: String,
-      pantryItems: 'PantryItemViewModel'
-    });
-
-    this._mapper.createMap<PantryItemInventoryDto, PantryItemInventoryViewModel>('PantryItemInventoryDto','PantryItemInventoryViewModel');
-    this._mapper.createMap<PantryItemDto, PantryItemViewModel>('PantryItemDto','PantryItemViewModel');
-    this._mapper.createMap<PantryDto, PantryViewModel>('PantryDto','PantryViewModel');
+    // map DomainModel to DTO
+    this._mapper.createMap(Pantry, PantryDto);
+    this._mapper.createMap(PantryItem, PantryItemDto);
 
     return this._mapper;
   }

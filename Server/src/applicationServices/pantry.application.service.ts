@@ -16,6 +16,13 @@ export class PantryApplicationService {
 
     public getPantryByIdAsync(id: number): Promise<PantryDto>
     {
+        this._loggingService.trace(`getting pantry with ID ${id}`);
         return this._pantryDomainService.getPantryById(id);
+    }
+
+    public createPantry(pantryDto: PantryDto): Promise<PantryDto>
+    {
+        this._loggingService.trace(`Creating pantry with name ${pantryDto.name}`);
+        return this._pantryDomainService.createPantry(pantryDto);
     }
 }

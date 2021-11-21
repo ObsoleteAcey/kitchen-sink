@@ -5,6 +5,8 @@ import { Pantry } from '../model/pantry/pantry.model';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../config/types.config';
 import { MappingService } from '../../commonServices/mapping.service';
+import { PantryItemDto } from '../../dataobjects/dtos/pantry/pantryItem.dto';
+import { Transaction } from 'sequelize/types';
 
 @injectable()
 export class PantryDomainService {
@@ -23,9 +25,22 @@ export class PantryDomainService {
 
         let pantryDto: PantryDto = null;
         if(result) {
-            pantryDto = this._mappingService.map<Pantry, PantryDto>(result, 'UserDto', 'User');
+            pantryDto = this._mappingService.map<Pantry, PantryDto>(result, PantryDto, Pantry);
         }
 
         return pantryDto;
+    }
+
+    public async createPantry(pantryDto: PantryDto): Promise<PantryDto>
+    {
+        let savedPantryDto: PantryDto;
+
+        await RunInSequalize.transationAsync(this._loggingService, async (t: Transaction) => {
+            const pantry = this._mappingService.map(pantryDto, Pantry, PantryDto);
+            const savedPantry = await pantry.save();
+            savedPantryDto = this._mappingService.map(pantry, PantryDto, Pantry);
+        });
+
+        return savedPantryDto;
     }
 }
