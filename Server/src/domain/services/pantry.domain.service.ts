@@ -48,8 +48,7 @@ export class PantryDomainService {
         let savedPantryDto: PantryDto;
 
         await RunInSequalize.transationAsync(this._loggingService, async (t: Transaction) => {
-            const pantry = this._mappingService.map(pantryDto, Pantry, PantryDto);
-            const savedPantry = await pantry.save();
+            const savedPantry = await Pantry.create(pantryDto, {transaction: t});
             savedPantryDto = this._mappingService.map(savedPantry, PantryDto, Pantry);
         });
 
