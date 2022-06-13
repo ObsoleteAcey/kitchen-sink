@@ -20,9 +20,17 @@ export class PantryController implements interfaces.Controller {
         // do nothing
     }
 
-    @httpGet("/")
-    private index(@request() req: express.Request, @response() res: express.Response): string {
-        return "Welcome!";
+    @httpGet("/all")
+    private async getAllPanties(@request() req: express.Request, @response() res: express.Response): Promise<void> {
+        const pantries = await this._pantryService.getAllPantriesAsync();
+
+        if(pantries === null || pantries.length === 0)
+        {
+            res.status(404).send("No pantries found");
+            return;
+        }
+
+        res.status(200).send(pantries);
     }
 
     @httpGet("/byid/:id")

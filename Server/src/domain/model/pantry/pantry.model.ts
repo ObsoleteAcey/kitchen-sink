@@ -1,5 +1,5 @@
 import { AutoMap } from '@automapper/classes';
-import { Model, Table, HasMany, Column, DataType, PrimaryKey } from 'sequelize-typescript';
+import { Model, Table, HasMany, Column, DataType } from 'sequelize-typescript';
 import { PantryItem } from './pantryItem.model';
 
 @Table

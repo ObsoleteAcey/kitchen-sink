@@ -7,5 +7,5 @@ export class PantryDto extends BaseDto {
     name: string;
 
     @AutoMap({typeFn: () => PantryItemDto})
-    pantryItems?: PantryItemDto[];
+    pantryItems: PantryItemDto[];
 }

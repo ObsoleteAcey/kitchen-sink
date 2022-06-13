@@ -1,0 +1,32 @@
+{
+	"info": {
+		"_postman_id": "12ebaab9-3ed0-454a-b2d1-f56cacfaec38",
+		"name": "KitchenSink API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PantryController",
+			"item": [
+				{
+					"name": "GetPantryById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "CreatePantry",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -8,7 +8,7 @@ export type CodeToRunInReadOnlyQueryAsync = () => Promise<void>;
 
 export type CodeToRunInReadOnlyQueryWithResult<TResult extends Model> = () => TResult;
 
-export type CodeToRunInReadOnlyQueryWithResultAsync<TResult extends Model> = () => Promise<TResult>;
+export type CodeToRunInReadOnlyQueryWithResultAsync<TResult extends Model> = () => Promise<TResult|TResult[]>;
 
 export type CodeToRunInTransaction = (t: Transaction) => void;
 
@@ -25,7 +25,7 @@ export class RunInSequalize {
     }
 
     public static async readOnlyQueryWithResultAsync<TResult extends Model>(logger: ILoggingService,
-        codeToRunInReadOnlyQueryWithResultAsync: CodeToRunInReadOnlyQueryWithResultAsync<TResult>): Promise<TResult> {
+        codeToRunInReadOnlyQueryWithResultAsync: CodeToRunInReadOnlyQueryWithResultAsync<TResult>): Promise<TResult|TResult[]> {
         return await this.runInReadOnlyQueryAsync(logger, null, codeToRunInReadOnlyQueryWithResultAsync);
     }
 
@@ -35,8 +35,8 @@ export class RunInSequalize {
 
     private static async runInReadOnlyQueryAsync<TResult extends Model>(logger: ILoggingService,
         codeToRunInReadOnlyQueryAsync?: CodeToRunInReadOnlyQueryAsync,
-        codeToRunInReadOnlyQueryWithResultAsync?: CodeToRunInReadOnlyQueryWithResultAsync<TResult>): Promise<TResult> {
-            let result: TResult = null;
+        codeToRunInReadOnlyQueryWithResultAsync?: CodeToRunInReadOnlyQueryWithResultAsync<TResult>): Promise<TResult|TResult[]> {
+            let result: TResult|TResult[] = null;
 
             if (codeToRunInReadOnlyQueryAsync) {
                 await codeToRunInReadOnlyQueryAsync();
